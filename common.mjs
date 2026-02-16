@@ -29,11 +29,9 @@ export function getNthDayOfMonth(year, month, day, occurrence) {
 		: occurrence === 'fourth' ? 4
 		: occurrence === 'fifth' ? 5
 		: null;
-
 	if (nth === null) {
 		throw new Error('Invalid occurrence: ' + occurrence);
 	}
-
 	// calculate zero-based index for month and day
 	const months = [
 		'january',
@@ -58,14 +56,11 @@ export function getNthDayOfMonth(year, month, day, occurrence) {
 		'friday',
 		'saturday',
 	];
-
 	const monthIndex = months.indexOf(month.toLowerCase());
 	const dayIndex = days.indexOf(day.toLowerCase());
-
 	// parse year
-	const yearInt = +year; 
-
-    //validate year, month, and day
+	const yearInt = +year;
+	//validate year, month, and day
 	if (isNaN(yearInt) || yearInt < 1) {
 		throw new Error('Invalid year: ' + year);
 	}
@@ -75,7 +70,6 @@ export function getNthDayOfMonth(year, month, day, occurrence) {
 	if (dayIndex === -1) {
 		throw new Error('Invalid day: ' + day);
 	}
-
 	// get first day of the month
 	const firstOfMonth = new Date(Date.UTC(yearInt, monthIndex, 1));
 	// get the first day index
@@ -85,13 +79,91 @@ export function getNthDayOfMonth(year, month, day, occurrence) {
 	// calculate day of the month for the nth occurrence
 	const dayOfMonth = 1 + offset + (nth - 1) * 7;
 	// validate that the calculated day of the month exists
-	const daysInMonth = 
-        new Date(Date.UTC(yearInt, monthIndex + 1, 0),).getUTCDate();
+	const daysInMonth = new Date(
+		Date.UTC(yearInt, monthIndex + 1, 0),
+	).getUTCDate();
 	if (dayOfMonth > daysInMonth) {
-		throw new Error(
-			`There is no ${occurrence} ${day} in ${month} ${year}`,
-		);
+		throw new Error(`There is no ${occurrence} ${day} in ${month} ${year}`);
 	}
 	// return date object of the nth occurrence
 	return new Date(Date.UTC(yearInt, monthIndex, dayOfMonth));
+}
+
+/**
+ * Returns a calendar matrix for a given month and year, where each week is an array of day numbers (or null for days outside the month).
+ * @param {string} year - The year (e.g. '2026').
+ * @param {string} month - The month name (e.g. 'February').
+ * @returns {Array<Array<number|null>>} A 2D array representing the calendar for the month, where each inner array is a week and contains day numbers for days in the month or null for padding/days not in month.
+ * @throws {Error} If the year or month is invalid.
+ * @example
+ * getCalendarMatrix('2026', 'January');
+ * // Returns [
+ * //   [null,null,null,null,1,2,3],
+ * //   [4,5,6,7,8,9,10],
+ * //   [11,12,13,14,15,16,17],
+ * //   [18,19,20,21,22,23,24],
+ * //   [25,26,27,28,29,30,31]
+ * // ] (January 2026 starts on a Thursday and has 31 days)
+ */
+export function getCalendarMatrix(year, month) {
+	// calculate zero-based index for month
+	const months = [
+		'january',
+		'february',
+		'march',
+		'april',
+		'may',
+		'june',
+		'july',
+		'august',
+		'september',
+		'october',
+		'november',
+		'december',
+	];
+	const monthIndex = months.indexOf(month.toLowerCase());
+	// parse year
+	const yearInt = +year;
+	// validate year and month
+	if (isNaN(yearInt) || yearInt < 1) {
+		throw new Error('Invalid year: ' + year);
+	}
+	if (monthIndex === -1) {
+		throw new Error('Invalid month: ' + month);
+	}
+	// get first day of the month
+	const firstOfMonth = new Date(Date.UTC(yearInt, monthIndex, 1));
+	const firstWeekday = firstOfMonth.getUTCDay();
+	// get number of days in the month by creating a date for the 0th day of the next month (which gives the last day of the current month)
+	const daysInMonth = new Date(
+		Date.UTC(yearInt, monthIndex + 1, 0),
+	).getUTCDate();
+	// create calendar matrix
+	const calendar = [];
+	let week = new Array(7).fill(null);
+	let dayCounter = 1;
+	// fill in the first week with null until the first day of the month and then start filling in the dates
+	for (let i = 0; i < 7; i++) {
+		if (i < firstWeekday) {
+			week[i] = null;
+		} else {
+			week[i] = new Date(
+				Date.UTC(yearInt, monthIndex, dayCounter),
+			).getUTCDate();
+			dayCounter++;
+		}
+	}
+	calendar.push(week);
+	// fill in the remaining weeks of the month
+	while (dayCounter <= daysInMonth) {
+		week = new Array(7).fill(null);
+		for (let i = 0; i < 7 && dayCounter <= daysInMonth; i++) {
+			week[i] = new Date(
+				Date.UTC(yearInt, monthIndex, dayCounter),
+			).getUTCDate();
+			dayCounter++;
+		}
+		calendar.push(week);
+	}
+	return calendar;
 }

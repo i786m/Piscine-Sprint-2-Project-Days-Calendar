@@ -1,4 +1,4 @@
-import { getNthDayOfMonth } from './common.mjs';
+import { getNthDayOfMonth, getCalendarMatrix } from './common.mjs';
 import assert from "node:assert";
 import test from "node:test";
 
@@ -31,3 +31,23 @@ test("getNthDayOfMonth returns correct date", () => {
   assert.throws(() => getNthDayOfMonth(2026, "January", "Friday", "sixth"), /Invalid occurrence/); 
 }); 
 
+test("getCalendarMatrix returns correct calendar matrix", () => {
+  const result = getCalendarMatrix("2026", "January");
+  assert.equal(result.length, 5);
+  assert.equal(result[0].length, 7);
+  assert.deepEqual(result[0], [null, null, null, null, 1, 2, 3]);
+  assert.deepEqual(result[1], [4, 5, 6, 7, 8, 9, 10]);
+  assert.deepEqual(result[2], [11, 12, 13, 14, 15, 16, 17]);
+  assert.deepEqual(result[3], [18, 19, 20, 21, 22, 23, 24]);
+  assert.deepEqual(result[4], [25, 26, 27, 28, 29, 30, 31]);
+});
+
+test("getCalendarMatrix works for February in a leap year", () => {
+  const result = getCalendarMatrix("2024", "February");
+  assert.equal(result.length, 5);
+  assert.deepEqual(result[0], [null, null, null, null, 1, 2, 3]);
+  assert.deepEqual(result[1], [4, 5, 6, 7, 8, 9, 10]);
+  assert.deepEqual(result[2], [11, 12, 13, 14, 15, 16, 17]);
+  assert.deepEqual(result[3], [18, 19, 20, 21, 22, 23, 24]);
+  assert.deepEqual(result[4], [25, 26, 27, 28, 29, null, null]);
+});
