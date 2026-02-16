@@ -1,4 +1,4 @@
-import { getNthDayOfMonth, getCalendarMatrix } from './common.mjs';
+import { getNthDayOfMonth, getCalendarMatrix, getPreviousMonth } from './common.mjs';
 import assert from "node:assert";
 import test from "node:test";
 
@@ -50,4 +50,15 @@ test("getCalendarMatrix works for February in a leap year", () => {
   assert.deepEqual(result[2], [11, 12, 13, 14, 15, 16, 17]);
   assert.deepEqual(result[3], [18, 19, 20, 21, 22, 23, 24]);
   assert.deepEqual(result[4], [25, 26, 27, 28, 29, null, null]);
+});
+
+test("getPreviousMonth returns correct previous month and year", () => {
+  assert.deepEqual(getPreviousMonth( "January", "2026"), { year: "2025", month: "December" });
+  assert.deepEqual(getPreviousMonth("February", "2026"), { year: "2026", month: "January" });
+  assert.deepEqual(getPreviousMonth("December", "2026"), { year: "2026", month: "November" });
+  assert.deepEqual(getPreviousMonth("January", "2020"), { year: "2019", month: "December" });
+  assert.deepEqual(getPreviousMonth('January', '1901'), {
+		year: '1900',
+		month: 'December',
+  });
 });

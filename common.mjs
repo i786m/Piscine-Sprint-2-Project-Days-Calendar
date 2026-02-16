@@ -167,3 +167,41 @@ export function getCalendarMatrix(year, month) {
 	}
 	return calendar;
 }
+
+
+/**
+ * Returns previous month's name and year in an object (e.g. { month: "December", year: "2025" }) based on the current month and year.
+ * @param {string} currentMonth - The current month  (e.g. 'January').
+ * @param {string} currentYear - The current year (e.g. '2026').
+ * @returns {object} The previous month and year in the format { month: "Month", year: "Year" }.
+ * @example
+ * getPreviousMonth('January 2026') would return { month: "December", year: "2025" }.
+ * getPreviousMonth('March 2026') would return { month: "February", year: "2026" }.
+ */
+export function getPreviousMonth(currentMonth, currentYear) {   
+    const months = [
+        'january',
+        'february',
+        'march',
+        'april',
+        'may',
+        'june',
+        'july',
+        'august',
+        'september',
+        'october',
+        'november',
+        'december'
+    ];
+    const monthIndex = months.indexOf(currentMonth.toLowerCase());
+    let previousMonthIndex = monthIndex - 1;
+    let previousYear = +currentYear;
+    if (previousMonthIndex < 0) {
+        previousMonthIndex = 11;
+        previousYear--;
+    }
+    const month = months[previousMonthIndex].charAt(0).toUpperCase() + months[previousMonthIndex].slice(1);
+    const year = previousYear.toString();
+    return { month, year };
+}
+
