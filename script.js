@@ -9,4 +9,3 @@ const generateCells = () => {
 
 }
 generateCells()
-console.log(calendarGrid);
