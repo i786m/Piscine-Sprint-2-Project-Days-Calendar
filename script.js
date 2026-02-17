@@ -35,7 +35,7 @@ let currentYear = new Date().getFullYear()
 const yearDropdown = () => {
     const selectYear = document.getElementById("year")
     selectYear.innerHTML = ""
-    for (let i = 1990; i <= 2100; i++) {
+    for (let i = 1900; i <= 2100; i++) {
         const option = document.createElement("option")
         option.textContent = i
         option.value = i
