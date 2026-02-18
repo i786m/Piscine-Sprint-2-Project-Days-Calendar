@@ -1,9 +1,50 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script type="module" src="common.mjs"></script>
-        <script type="module" src="web.mjs"></script>
-    </head>
-    <body>
-    </body>
+
+<head>
+    <!-- <script type="module" src="common.mjs"></script> -->
+    <!-- <script type="module" src="web.mjs"></script> -->
+         <script type="module" src="script.js"></script>
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <main class="container">
+        <section aria-label="Calendar controls">
+            <div id="controlsBar">
+                <button id="prevBtn">Prev</button>
+                <label for="month">Choose a month</label>
+                <select name="month" id="month">
+                    <option value="" disabled selected>Select Month</option>
+                </select>
+                <label for="year">Choose a year</label>
+                <select name="year" id="year">
+                    <option value="" disabled selected>Select Year</option>
+                </select>
+                <button id="nextBtn">Next</button>
+            </div>
+            <section aria-label="Calendar">
+                <div class="calendarContainer" role="grid" aria-label="Month view calendar">
+                    <div class="weekDays" role="row">
+                        <div role="columnheader">Sunday</div>
+                        <div role="columnheader">Monday</div>
+                        <div role="columnheader">Tuesday</div>
+                        <div role="columnheader">Wednesday</div>
+                        <div role="columnheader">Thursday</div>
+                        <div role="columnheader">Friday</div>
+                        <div role="columnheader">Saturday</div>
+                    </div>
+
+                    <div id="calendarGrid" role="rowgroup" aria-label="Days grid">
+                    </div>
+
+                </div>
+            </section>
+
+        </section>
+    </main>
+
+</body>
+
 </html>
