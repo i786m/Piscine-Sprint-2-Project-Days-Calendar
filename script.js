@@ -41,7 +41,7 @@ document.getElementById('month').addEventListener('change', (e) => {
 	renderCalendar();
 });
 
-let currentYear = new Date().getFullYear();
+let currentYear = new Date().getFullYear(); // get month get year and populate to span in controls div
 const yearDropdown = () => {
 	const selectYear = document.getElementById('year');
 	selectYear.innerHTML = '';
