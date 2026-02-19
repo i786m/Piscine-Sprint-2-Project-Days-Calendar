@@ -2,7 +2,6 @@
     display: grid;
     height: 100vh;
     padding: 20px;
-
 }
 
 #controlsBar {
@@ -16,29 +15,24 @@
 .calendarContainer {
     display: grid;
     gap: 6px;
-    border: 2px solid red;
+    border: 1px solid #cccccc;
     padding: 10px;
 }
 
 .weekDays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    border: 2px solid blue;
+    background-color: black;
+    color: #ccc;
+    padding: 5px;
+
 }
 
 #calendarGrid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    border: 2px solid green;
+    border: 1px solid #ccc;
     grid-auto-rows: 70px;
-}
-
-.weekDays div {
-    border: 1px solid orange;
-}
-
-#calendarGrid div {
-    border: 1px solid purple;
 }
 
 .weekDays div,
@@ -47,6 +41,19 @@
     align-items: center;
     justify-content: center;
 }
+
 .dayCell {
-  border: 1px solid #ccc;
+    border: 1px solid #ccc;
+}
+
+.currentDate {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#current-year {
+    font-size: xx-large;
 }
