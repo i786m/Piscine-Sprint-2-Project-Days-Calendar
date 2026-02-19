@@ -1,6 +1,7 @@
 import { getNthDayOfMonth, getCalendarMatrix, getPreviousMonth, getNextMonth, getEventsForMonth } from './common.mjs';
 import assert from "node:assert";
 import test from "node:test";
+import daysData from './days.json' with { type: 'json' };
 
 test("getNthDayOfMonth returns correct date", () => {
   const result1 = getNthDayOfMonth(2026, "January", "Friday", "first"); // January 1st, 2026 is a Friday (0-indexed weekday)
@@ -72,27 +73,27 @@ test("getNextMonth returns correct next month and year", () => {
   });
 });
 
-test("getEventsForMonth returns correct events for a given month and year", async () => {
-  const eventsOctober2026 = await getEventsForMonth("October", "2026");
+test("getEventsForMonth returns correct events for a given month and year", () => {
+  const eventsOctober2026 = getEventsForMonth(daysData, "October", "2026");
   assert.deepEqual(eventsOctober2026, [
     { event: "Ada Lovelace Day", date: 13 },
     { event: "World Lemur Day", date: 30 },
   ]);
 
-  const eventsOctober2024 = await getEventsForMonth("October", "2024");
+  const eventsOctober2024 = getEventsForMonth(daysData, "October", "2024");
   assert.deepEqual(eventsOctober2024, [
     { event: "Ada Lovelace Day", date: 8 },
     { event: "World Lemur Day", date: 25 },
   ]);
 
-  const eventsSeptember2026 = await getEventsForMonth("September", "2026");
+  const eventsSeptember2026 = getEventsForMonth(daysData, "September", "2026");
   assert.deepEqual(eventsSeptember2026, [
-		{ event: 'International Vulture Awareness Day', date: 5 },
-		{ event: 'International Red Panda Day', date: 19 },
+    { event: 'International Vulture Awareness Day', date: 5 },
+    { event: 'International Red Panda Day', date: 19 },
   ]);
 
-  const eventsMay2026 = await getEventsForMonth("May", "2026");
+  const eventsMay2026 = getEventsForMonth(daysData, "May", "2026");
   assert.deepEqual(eventsMay2026, [
-		{ event: 'International Binturong Day', date: 9 },
+    { event: 'International Binturong Day', date: 9 },
   ]);
 });

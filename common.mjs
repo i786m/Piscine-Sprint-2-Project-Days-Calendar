@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 /**
  * Returns the Date object for the nth occurrence of a specific weekday in a given month and year.
  * @param {string} year - The year (e.g. '2026').
@@ -256,27 +254,24 @@ export function getNextMonth(currentMonth, currentYear) {
 }
 
 /**
- * Returns events in a month based on the provided month and year. It filters the events from the days.json file and returns only those that match the specified month and year.
+ * Returns events in a month based on the provided month and year, using the supplied daysData array.
+ * @param {Array<Object>} daysData - Array of commemorative day objects (from days.json).
  * @param {string} month - The month name (e.g. 'January').
  * @param {string} year - The year (e.g. '2026').
  * @returns {Array<{event: string, date: number}>} An array of event objects in the form { event: "Event Name", date: dayNumber } where date is the day of the month (1-31) that the event occurs.
  * @example
- * getEventsForMonth('October', '2026')
+ * getEventsForMonth(daysData, 'October', '2026')
  * //returns [
  * //   { event: 'Ada Lovelace Day', date: 13 },
  * //   { event: 'World Lemur Day', date: 30 }
  * // ]
- * * getEventsForMonth('October', '2024')
+ * getEventsForMonth(daysData, 'October', '2024')
  * //returns [
  * //   { event: 'Ada Lovelace Day', date: 8 },
  * //   { event: 'World Lemur Day', date: 25 }
  * // ]
  */
-
-export function getEventsForMonth(month, year) {
-    const daysData = JSON.parse(
-		fs.readFileSync(new URL('./days.json', import.meta.url)),
-	);
+export function getEventsForMonth(daysData, month, year) {
 	const events = daysData.filter((event) => event.monthName === month);
 	const eventDates = events.map((event) => {
 		return {
