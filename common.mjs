@@ -221,8 +221,8 @@ export function getPreviousMonth(currentMonth, currentYear) {
  * @param {string} currentYear - The current year (e.g. '2026').
  * @returns {object} The next month and year in the format { month: "Month", year: "Year" }.
  * @example
- * getNextMonth('January 2026') would return { month: "February", year: "2026" }.
- * getNextMonth('December 2026') would return { month: "January", year: "2027" }.
+ * getNextMonth('January', '2026') would return { month: "February", year: "2026" }.
+ * getNextMonth('December', '2026') would return { month: "January", year: "2027" }.
  */
 export function getNextMonth(currentMonth, currentYear) {
 	const months = [
