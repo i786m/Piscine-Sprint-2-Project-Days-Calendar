@@ -1,16 +1,18 @@
 
 
-const generateCells = () => {
-    const calendarGrid = document.getElementById("calendarGrid")
+import { getCalendarMatrix } from "./common.mjs"
 
-    for( let i = 0; i<42 ; i++){
-    const dayCell = document.createElement("div")
-    dayCell.classList.add("dayCell")
-    calendarGrid.appendChild(dayCell)
-    }
+// const generateCells = () => {
+//     const calendarGrid = document.getElementById("calendarGrid")
 
-}
-generateCells()
+//     for (let i = 0; i < 42; i++) {
+//         const dayCell = document.createElement("div")
+//         dayCell.classList.add("dayCell")
+//         calendarGrid.appendChild(dayCell)
+//     }
+
+// }
+// generateCells()
 
 
 const MONTHS = [
@@ -28,8 +30,13 @@ const monthDropdown = () => {
         monthSelect.appendChild(option)
     });
     monthSelect.value = currentMonth
+
 }
-monthDropdown()
+monthDropdown();
+document.getElementById("month").addEventListener("change", (e) => {
+    currentMonth = Number(e.target.value)
+    renderCalendar()
+})
 
 let currentYear = new Date().getFullYear()
 const yearDropdown = () => {
@@ -44,4 +51,38 @@ const yearDropdown = () => {
     selectYear.value = currentYear
 }
 
-yearDropdown()
+yearDropdown();
+document.getElementById("year").addEventListener("change", (e) => {
+    currentYear = Number(e.target.value)
+    renderCalendar()
+})
+
+const renderCalendar = () => {
+    const calendarGrid = document.getElementById("calendarGrid")
+    calendarGrid.innerHTML = ""
+
+    const monthName = MONTHS[currentMonth]
+    const yearString = String(currentYear)
+
+    const matrix = getCalendarMatrix(yearString, monthName)
+
+    matrix.forEach(week => {
+        week.forEach(day => {
+            const cell = document.createElement("div")
+            cell.classList.add("dayCell")
+
+            if (day !== null) {
+                cell.textContent = day
+            }
+
+            calendarGrid.appendChild(cell)
+        })
+    })
+}
+
+
+renderCalendar();
+
+
+
+
