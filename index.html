@@ -4,10 +4,11 @@
 <head>
     <!-- <script type="module" src="common.mjs"></script> -->
     <!-- <script type="module" src="web.mjs"></script> -->
-         <script type="module" src="script.js"></script>
+    <script type="module" src="script.js"></script>
     <title>Days Calendar</title>
     <link rel="stylesheet" href="./style.css">
-    <meta name="description" content="A calendar application that displays events based on a JSON data source. Users can navigate through months and years to view scheduled events.">
+    <meta name="description"
+        content="A calendar application that displays events based on a JSON data source. Users can navigate through months and years to view scheduled events.">
 </head>
 
 <body>
@@ -15,8 +16,6 @@
         <section aria-label="Calendar controls">
             <div id="controlsBar">
                 <button id="prevBtn">Prev</button>
-                <span id = 'current-month'></span>
-                <span id='current-year'></span>
                 <label for="month">Choose a month</label>
                 <select name="month" id="month">
                     <option value="" disabled selected>Select Month</option>
@@ -27,6 +26,12 @@
                 </select>
                 <button id="nextBtn">Next</button>
             </div>
+            <section aria-label="Show current time">
+                <div class="currentDate">
+                    <span id='current-year'></span>
+                    <span id='current-month'></span>
+                </div>
+            </section>
             <section aria-label="Calendar">
                 <div class="calendarContainer" role="grid" aria-label="Month view calendar">
                     <div class="weekDays" role="row">

@@ -1,4 +1,9 @@
-import { getCalendarMatrix, getEventsForMonth } from './common.mjs';
+import {
+	getCalendarMatrix,
+	getEventsForMonth,
+	getPreviousMonth,
+	getNextMonth,
+} from './common.mjs';
 
 let daysData = [];
 
@@ -67,6 +72,13 @@ const renderCalendar = () => {
 	const monthName = MONTHS[currentMonth];
 	const yearString = String(currentYear);
 
+	const displayMonth = document.getElementById('current-month');
+	displayMonth.textContent = monthName
+
+	const displayYear = document.getElementById('current-year');
+	displayYear.textContent = yearString;
+
+
 	const matrix = getCalendarMatrix(yearString, monthName);
 	// Get events for this month/year
 	const events = getEventsForMonth(daysData, monthName, yearString);
@@ -96,3 +108,52 @@ const renderCalendar = () => {
 		}
 	});
 };
+document.getElementById('prevBtn').addEventListener('click', () => {
+	const { month, year } = getPreviousMonth(MONTHS[currentMonth], currentYear);
+
+	currentMonth = MONTHS.indexOf(month);
+	currentYear = Number(year);
+
+	ensureYearInDropdown(currentYear);
+
+	document.getElementById('month').value = currentMonth;
+	document.getElementById('year').value = currentYear;
+
+	renderCalendar();
+});
+
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+	const { month, year } = getNextMonth(MONTHS[currentMonth], currentYear);
+
+	currentMonth = MONTHS.indexOf(month);
+	currentYear = Number(year);
+
+	ensureYearInDropdown(currentYear);
+
+	document.getElementById('month').value = currentMonth;
+	document.getElementById('year').value = currentYear;
+
+	renderCalendar();
+});
+
+
+
+function ensureYearInDropdown(year) {
+	const yearSelect = document.getElementById('year');
+	let yearExists = false;
+
+	for (let i = 0; i < yearSelect.options.length; i++) {
+		if (Number(yearSelect.options[i].value) === year) {
+			yearExists = true;
+			break;
+		}
+	}
+
+	if (!yearExists) {
+		const option = document.createElement('option');
+		option.value = year;
+		option.textContent = year;
+		yearSelect.appendChild(option);
+	}
+}
