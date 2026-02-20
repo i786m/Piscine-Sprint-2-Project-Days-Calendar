@@ -5,7 +5,7 @@ const daysData = JSON.parse(
 	fs.readFileSync(new URL('./days.json', import.meta.url)),
 );
 
-let text = 'BEGIN:VCALENDAR\nVERSION:2.0\n';
+let text = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Days Calendar//EN\n';
 
 for (let year = 2020; year <= 2030; year++) {
 	for (const { name, monthName, dayName, occurrence } of daysData) {
@@ -19,6 +19,8 @@ for (let year = 2020; year <= 2030; year++) {
 		};
 
 		text += 'BEGIN:VEVENT\n';
+		text += `UID:${event.name}-${event.start}@days-calendar\n`;
+		text += `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\n`;
 		text += `SUMMARY:${event.name}\n`;
 		text += `DTSTART;VALUE=DATE:${event.start}\n`;
 		text += `DTEND;VALUE=DATE:${event.end}\n`;

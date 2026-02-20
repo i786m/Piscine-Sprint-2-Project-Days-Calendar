@@ -39,12 +39,12 @@ const MONTHS = [
 export function getNthDayOfMonth(year, month, day, occurrence) {
 	let nth =
 		occurrence === 'first' ? 1
-			: occurrence === 'second' ? 2
-				: occurrence === 'third' ? 3
-					: occurrence === 'fourth' ? 4
-						: occurrence === 'fifth' ? 5
-							: occurrence === 'last' ? 'last'
-								: null;
+		: occurrence === 'second' ? 2
+		: occurrence === 'third' ? 3
+		: occurrence === 'fourth' ? 4
+		: occurrence === 'fifth' ? 5
+		: occurrence === 'last' ? 'last'
+		: null;
 	if (nth === null) {
 		throw new Error('Invalid occurrence: ' + occurrence);
 	}
@@ -109,7 +109,6 @@ export function getNthDayOfMonth(year, month, day, occurrence) {
  * // ] (January 2026 starts on a Thursday and has 31 days)
  */
 export function getCalendarMatrix(year, month) {
-
 	const monthIndex = MONTHS.indexOf(month.toLowerCase());
 	const yearInt = +year;
 	if (isNaN(yearInt) || yearInt < 1) {
@@ -160,7 +159,6 @@ export function getCalendarMatrix(year, month) {
  * getPreviousMonth('March 2026') would return { month: "February", year: "2026" }.
  */
 export function getPreviousMonth(currentMonth, currentYear) {
-
 	const monthIndex = MONTHS.indexOf(currentMonth.toLowerCase());
 	let previousMonthIndex = monthIndex - 1;
 	let previousYear = +currentYear;
@@ -185,7 +183,6 @@ export function getPreviousMonth(currentMonth, currentYear) {
  * getNextMonth('December', '2026') would return { month: "January", year: "2027" }.
  */
 export function getNextMonth(currentMonth, currentYear) {
-
 	const monthIndex = MONTHS.indexOf(currentMonth.toLowerCase());
 	let nextMonthIndex = monthIndex + 1;
 	let nextYear = +currentYear;
