@@ -46,7 +46,7 @@ document.getElementById('month').addEventListener('change', (e) => {
 	renderCalendar();
 });
 
-let currentYear = new Date().getFullYear(); // get month get year and populate to span in controls div
+let currentYear = new Date().getFullYear();
 const yearDropdown = () => {
 	const selectYear = document.getElementById('year');
 	selectYear.innerHTML = '';
@@ -66,9 +66,7 @@ document.getElementById('year').addEventListener('change', (e) => {
 });
 
 const renderCalendar = () => {
-	// The grid is .calendarContainer (role=grid)
 	const calendarGrid = document.querySelector('.calendarContainer');
-	// Remove all week rows except the header row
 	Array.from(calendarGrid.children).forEach((child) => {
 		if (!child.classList.contains('weekDays')) {
 			calendarGrid.removeChild(child);
@@ -85,10 +83,8 @@ const renderCalendar = () => {
 	displayYear.textContent = yearString;
 
 	const matrix = getCalendarMatrix(yearString, monthName);
-	// Get events for this month/year
 	const events = getEventsForMonth(daysData, monthName, yearString);
 
-	// Build ARIA-compliant grid: each week is a row, each day is a gridcell
 	matrix.forEach((week) => {
 		const row = document.createElement('div');
 		row.setAttribute('role', 'row');
@@ -105,7 +101,6 @@ const renderCalendar = () => {
 		calendarGrid.appendChild(row);
 	});
 
-	// After rendering, append events to the correct cells
 	events.forEach((ev) => {
 		const cell = calendarGrid.querySelector(`[data-day="${ev.date}"]`);
 		if (cell) {
