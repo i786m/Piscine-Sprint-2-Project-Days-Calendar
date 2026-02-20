@@ -22,34 +22,32 @@
  * getNthDayOfMonth('2026', 'January', 'Friday', 'sixth');
  * // Throws Error: Invalid occurrence: sixth
  */
+const MONTHS = [
+	'january',
+	'february',
+	'march',
+	'april',
+	'may',
+	'june',
+	'july',
+	'august',
+	'september',
+	'october',
+	'november',
+	'december',
+];
 export function getNthDayOfMonth(year, month, day, occurrence) {
-	// map occurrence string to its corresponding number
 	let nth =
 		occurrence === 'first' ? 1
-		: occurrence === 'second' ? 2
-		: occurrence === 'third' ? 3
-		: occurrence === 'fourth' ? 4
-		: occurrence === 'fifth' ? 5
-		: occurrence === 'last' ? 'last'
-		: null;
+			: occurrence === 'second' ? 2
+				: occurrence === 'third' ? 3
+					: occurrence === 'fourth' ? 4
+						: occurrence === 'fifth' ? 5
+							: occurrence === 'last' ? 'last'
+								: null;
 	if (nth === null) {
 		throw new Error('Invalid occurrence: ' + occurrence);
 	}
-	// calculate zero-based index for month and day
-	const months = [
-		'january',
-		'february',
-		'march',
-		'april',
-		'may',
-		'june',
-		'july',
-		'august',
-		'september',
-		'october',
-		'november',
-		'december',
-	];
 	const days = [
 		'sunday',
 		'monday',
@@ -59,11 +57,9 @@ export function getNthDayOfMonth(year, month, day, occurrence) {
 		'friday',
 		'saturday',
 	];
-	const monthIndex = months.indexOf(month.toLowerCase());
+	const monthIndex = MONTHS.indexOf(month.toLowerCase());
 	const dayIndex = days.indexOf(day.toLowerCase());
-	// parse year
 	const yearInt = +year;
-	//validate year, month, and day
 	if (isNaN(yearInt) || yearInt < 1) {
 		throw new Error('Invalid year: ' + year);
 	}
@@ -73,7 +69,6 @@ export function getNthDayOfMonth(year, month, day, occurrence) {
 	if (dayIndex === -1) {
 		throw new Error('Invalid day: ' + day);
 	}
-	//get total number of occurrences of specified day in the month
 	const firstOfMonth = new Date(Date.UTC(yearInt, monthIndex, 1));
 	const firstWeekday = firstOfMonth.getUTCDay();
 	const offset = (dayIndex - firstWeekday + 7) % 7;
@@ -94,7 +89,6 @@ export function getNthDayOfMonth(year, month, day, occurrence) {
 			`The ${occurrence} ${day} does not exist in ${month} ${year}`,
 		);
 	}
-	// return date object of the nth occurrence
 	return new Date(Date.UTC(yearInt, monthIndex, dayOfMonth));
 }
 
@@ -115,43 +109,23 @@ export function getNthDayOfMonth(year, month, day, occurrence) {
  * // ] (January 2026 starts on a Thursday and has 31 days)
  */
 export function getCalendarMatrix(year, month) {
-	// calculate zero-based index for month
-	const months = [
-		'january',
-		'february',
-		'march',
-		'april',
-		'may',
-		'june',
-		'july',
-		'august',
-		'september',
-		'october',
-		'november',
-		'december',
-	];
-	const monthIndex = months.indexOf(month.toLowerCase());
-	// parse year
+
+	const monthIndex = MONTHS.indexOf(month.toLowerCase());
 	const yearInt = +year;
-	// validate year and month
 	if (isNaN(yearInt) || yearInt < 1) {
 		throw new Error('Invalid year: ' + year);
 	}
 	if (monthIndex === -1) {
 		throw new Error('Invalid month: ' + month);
 	}
-	// get first day of the month
 	const firstOfMonth = new Date(Date.UTC(yearInt, monthIndex, 1));
 	const firstWeekday = firstOfMonth.getUTCDay();
-	// get number of days in the month by creating a date for the 0th day of the next month (which gives the last day of the current month)
 	const daysInMonth = new Date(
 		Date.UTC(yearInt, monthIndex + 1, 0),
 	).getUTCDate();
-	// create calendar matrix
 	const calendar = [];
 	let week = new Array(7).fill(null);
 	let dayCounter = 1;
-	// fill in the first week with null until the first day of the month and then start filling in the dates
 	for (let i = 0; i < 7; i++) {
 		if (i < firstWeekday) {
 			week[i] = null;
@@ -163,7 +137,6 @@ export function getCalendarMatrix(year, month) {
 		}
 	}
 	calendar.push(week);
-	// fill in the remaining weeks of the month
 	while (dayCounter <= daysInMonth) {
 		week = new Array(7).fill(null);
 		for (let i = 0; i < 7 && dayCounter <= daysInMonth; i++) {
@@ -187,21 +160,8 @@ export function getCalendarMatrix(year, month) {
  * getPreviousMonth('March 2026') would return { month: "February", year: "2026" }.
  */
 export function getPreviousMonth(currentMonth, currentYear) {
-	const months = [
-		'january',
-		'february',
-		'march',
-		'april',
-		'may',
-		'june',
-		'july',
-		'august',
-		'september',
-		'october',
-		'november',
-		'december',
-	];
-	const monthIndex = months.indexOf(currentMonth.toLowerCase());
+
+	const monthIndex = MONTHS.indexOf(currentMonth.toLowerCase());
 	let previousMonthIndex = monthIndex - 1;
 	let previousYear = +currentYear;
 	if (previousMonthIndex < 0) {
@@ -209,8 +169,8 @@ export function getPreviousMonth(currentMonth, currentYear) {
 		previousYear--;
 	}
 	const month =
-		months[previousMonthIndex].charAt(0).toUpperCase() +
-		months[previousMonthIndex].slice(1);
+		MONTHS[previousMonthIndex].charAt(0).toUpperCase() +
+		MONTHS[previousMonthIndex].slice(1);
 	const year = previousYear.toString();
 	return { month, year };
 }
@@ -225,21 +185,8 @@ export function getPreviousMonth(currentMonth, currentYear) {
  * getNextMonth('December', '2026') would return { month: "January", year: "2027" }.
  */
 export function getNextMonth(currentMonth, currentYear) {
-	const months = [
-		'january',
-		'february',
-		'march',
-		'april',
-		'may',
-		'june',
-		'july',
-		'august',
-		'september',
-		'october',
-		'november',
-		'december',
-	];
-	const monthIndex = months.indexOf(currentMonth.toLowerCase());
+
+	const monthIndex = MONTHS.indexOf(currentMonth.toLowerCase());
 	let nextMonthIndex = monthIndex + 1;
 	let nextYear = +currentYear;
 	if (nextMonthIndex > 11) {
@@ -247,8 +194,8 @@ export function getNextMonth(currentMonth, currentYear) {
 		nextYear++;
 	}
 	const month =
-		months[nextMonthIndex].charAt(0).toUpperCase() +
-		months[nextMonthIndex].slice(1);
+		MONTHS[nextMonthIndex].charAt(0).toUpperCase() +
+		MONTHS[nextMonthIndex].slice(1);
 	const year = nextYear.toString();
 	return { month, year };
 }
