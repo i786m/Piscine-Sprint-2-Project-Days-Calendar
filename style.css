@@ -1,59 +1,73 @@
+.calendarContainer [role='row'] {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+}
 .container {
-    display: grid;
-    height: 100vh;
-    padding: 20px;
+	display: grid;
+	height: 100vh;
+	padding: 20px;
 }
 
 #controlsBar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 10px;
 }
 
 .calendarContainer {
-    display: grid;
-    gap: 6px;
-    border: 1px solid #cccccc;
-    padding: 10px;
+	display: grid;
+	gap: 6px;
+	border: 1px solid #cccccc;
+	padding: 10px;
 }
 
 .weekDays {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    background-color: black;
-    color: #ccc;
-    padding: 5px;
-
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	background-color: black;
+	color: #ccc;
+	padding: 5px;
 }
 
 #calendarGrid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    border: 1px solid #ccc;
-    grid-auto-rows: 70px;
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	border: 1px solid #ccc;
+	grid-auto-rows: 70px;
 }
 
 .weekDays div,
 #calendarGrid div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .dayCell {
-    border: 1px solid #ccc;
+	border: 1px solid #ccc;
+	min-height: 70px;
+	padding: 8px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 .currentDate {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 10px;
 }
 
 #current-year {
-    font-size: xx-large;
+	font-size: xx-large;
+}
+
+.eventName {
+	font-size: small;
+	margin-top: 4px;
 }

@@ -66,35 +66,43 @@ document.getElementById('year').addEventListener('change', (e) => {
 });
 
 const renderCalendar = () => {
-	const calendarGrid = document.getElementById('calendarGrid');
-	calendarGrid.innerHTML = '';
+	// The grid is .calendarContainer (role=grid)
+	const calendarGrid = document.querySelector('.calendarContainer');
+	// Remove all week rows except the header row
+	Array.from(calendarGrid.children).forEach((child) => {
+		if (!child.classList.contains('weekDays')) {
+			calendarGrid.removeChild(child);
+		}
+	});
 
 	const monthName = MONTHS[currentMonth];
 	const yearString = String(currentYear);
 
 	const displayMonth = document.getElementById('current-month');
-	displayMonth.textContent = monthName
+	displayMonth.textContent = monthName;
 
 	const displayYear = document.getElementById('current-year');
 	displayYear.textContent = yearString;
-
 
 	const matrix = getCalendarMatrix(yearString, monthName);
 	// Get events for this month/year
 	const events = getEventsForMonth(daysData, monthName, yearString);
 
+	// Build ARIA-compliant grid: each week is a row, each day is a gridcell
 	matrix.forEach((week) => {
+		const row = document.createElement('div');
+		row.setAttribute('role', 'row');
 		week.forEach((day) => {
 			const cell = document.createElement('div');
 			cell.classList.add('dayCell');
-
+			cell.setAttribute('role', 'gridcell');
 			if (day !== null) {
 				cell.textContent = day;
 				cell.setAttribute('data-day', day);
 			}
-
-			calendarGrid.appendChild(cell);
+			row.appendChild(cell);
 		});
+		calendarGrid.appendChild(row);
 	});
 
 	// After rendering, append events to the correct cells
@@ -122,7 +130,6 @@ document.getElementById('prevBtn').addEventListener('click', () => {
 	renderCalendar();
 });
 
-
 document.getElementById('nextBtn').addEventListener('click', () => {
 	const { month, year } = getNextMonth(MONTHS[currentMonth], currentYear);
 
@@ -137,16 +144,19 @@ document.getElementById('nextBtn').addEventListener('click', () => {
 	renderCalendar();
 });
 
-
-
 function ensureYearInDropdown(year) {
 	const yearSelect = document.getElementById('year');
 	let yearExists = false;
+	let insertBeforeIndex = 0;
 
 	for (let i = 0; i < yearSelect.options.length; i++) {
-		if (Number(yearSelect.options[i].value) === year) {
+		const yearOptionValue = Number(yearSelect.options[i].value);
+		if (yearOptionValue === year) {
 			yearExists = true;
 			break;
+		}
+		if (yearOptionValue < year) {
+			insertBeforeIndex = i + 1;
 		}
 	}
 
@@ -154,6 +164,6 @@ function ensureYearInDropdown(year) {
 		const option = document.createElement('option');
 		option.value = year;
 		option.textContent = year;
-		yearSelect.appendChild(option);
+		yearSelect.insertBefore(option, yearSelect.options[insertBeforeIndex]);
 	}
 }
