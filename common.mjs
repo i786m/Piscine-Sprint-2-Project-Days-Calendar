@@ -1,3 +1,18 @@
+const MONTHS = [
+	'january',
+	'february',
+	'march',
+	'april',
+	'may',
+	'june',
+	'july',
+	'august',
+	'september',
+	'october',
+	'november',
+	'december',
+];
+
 /**
  * Returns the Date object for the nth occurrence of a specific weekday in a given month and year.
  * @param {string} year - The year (e.g. '2026').
@@ -22,20 +37,6 @@
  * getNthDayOfMonth('2026', 'January', 'Friday', 'sixth');
  * // Throws Error: Invalid occurrence: sixth
  */
-const MONTHS = [
-	'january',
-	'february',
-	'march',
-	'april',
-	'may',
-	'june',
-	'july',
-	'august',
-	'september',
-	'october',
-	'november',
-	'december',
-];
 export function getNthDayOfMonth(year, month, day, occurrence) {
 	let nth =
 		occurrence === 'first' ? 1
